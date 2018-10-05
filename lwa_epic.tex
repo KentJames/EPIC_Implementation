@@ -20,8 +20,8 @@
 \maketitle
 \begin{abstract}
 
-  Future radio interferometers face a variety of technical challenges related
-  to future science goals. These include high performance transient back-ends
+  Future radio interferometers and their science goals incur new technical
+  challenges. These include high performance transient back-ends
   for the detection of pulsars and Fast Radio Bursts (FRB's). Proposed
   interferometers include the SKA-Low which uses a very large number of dipole
   antennas arranged in a very high density layout, which begins to make FX
@@ -31,19 +31,19 @@
 
   The MOFF formalism aims to overcome this problem, by re-arranging the canonical
   van-Cittert Zernike theorem to remove the explicit outer product of the vector of
-  antenna electric fields, $E(a)$ with its transpose \cite{morales_enabling_2011}.
+  antenna electric fields, $E(a)$ with its transpose \citep{morales_enabling_2011}.
   This implicit correlation through direct imaging factilitates a scaling of
   $\mathcal{O}(n\log{n})$, providing a significant theoretical advantage for
   future highly dense arrays.
 
   EPIC is the first practical implementation of the direct imaging correlator
-  concept based on the MOFF formalism \cite{thyagarajan_generic_2017}. In this
+  concept based on the MOFF formalism \citep{thyagarajan_generic_2017}. In this
   paper we describe the practical implementation of a EPIC on the LWA telescope
   in New Mexico, USA, examining the practical details as well as exciting first
-  science results.
-
-  
+  science results.  
 \end{abstract}
+
+
 \section{Introduction}
 
 Radio astronomy has been undergoing a renaissance in recent years,
@@ -91,7 +91,7 @@ Section \ref{sec:discussion}.
 The canonical interferometry formulation is based on the van-Cittert
 zernike theorem, from which can be derived the canonical Sky
 visibility relationship
-\cite{born_principles_1999}\cite{ryle_synthesis_1960}:
+\citep{born_principles_1999}\citep{ryle_synthesis_1960}:
 
 \begin{multline} \label{eq:vc}
  I(l,m) = \iint V(u,v,w) \\ \exp\bigg[2\pi i \big(ul + vm + w\big(\sqrt{1-l^2-m^2}-1\big)\bigg]dl\: dm
@@ -108,9 +108,9 @@ with their conjugates:
 
 The theory of MOFF allows us to re-arrange equation \ref{eq:vc}
 to form the MOFF algorithm using the multiplication-convolution
-theorem.\cite{morales_enabling_2011}:
+theorem \citep{morales_enabling_2011}:
 
-\begin{multline} \label{eq:vc}
+\begin{multline} \label{eq:vc_moff}
  I(l,m) = \Bigg\langle \bigg[\iint E(u,v,w) \\ \exp\big[2\pi i \big(ul + vm + w\big(\sqrt{1-l^2-m^2}-1\big)\big]dl\: dm \bigg]^2 \Bigg \rangle
 \end{multline}
 
@@ -147,7 +147,7 @@ $\mathcal{O}(n\log{n})$, compared to $\mathcal{O}(n^2)$ for the
 classical FX correlator. This is a great improvement in the
 context of future, highly dense arrays, where, depending on
 array geometry, an FX correlator may be less efficient than
-an EPIC based correlator \cite{thyagarajan_generic_2017}.
+an EPIC based correlator \citep{thyagarajan_generic_2017}.
 The limiting factor for MOFF is the FFT size from the grid,
 whereas an FX correlator is the number of baseline pairs.
 
@@ -172,9 +172,10 @@ from swapping the standard FX correlator for the MOFF based correlator: EPIC.
 
 The LWA is an interferometer observing
 between frequencies of 20MHz to 120MHz, with two operational stations
-located at the VLA Site and Seviletta, both in New Mexico, USA \cite{henning_first_2010}\cite{taylor_first_2012}. Its
+located at the VLA Site and Seviletta, both in New Mexico, USA \citep{henning_first_2010}\citep{taylor_first_2012}. Its
 high density configuration makes it an excellent candidate for
-deployment of EPIC .
+deployment of EPIC. It offers a variety of observation modes, from
+single station to a spare-time ``swarm''mode \citep{dowell_swarm_2018}.
 
 It consists of 256 dipole antennas arranged in a dense pseudo-random
 arrangement on a fairly flat piece of ground. One of the antennas
@@ -203,12 +204,12 @@ affecting it.
 Deployment on the LWA has been supported and sped up greatly through
 the LWA's extensive public software library which trivialises steps such as
 performing delay calibration to account for different antenna lengths,
-as well as storing the array geometry \cite{dowell_long_2012}.
+as well as storing the array geometry \citep{dowell_long_2012}.
 
 \subsection{Bifrost}
 
 The implementation is done using the Bifrost framework
-\cite{cranmer_bifrost:_2017}. Bifrost is a highly abstracted library
+\citep{cranmer_bifrost:_2017}. Bifrost is a highly abstracted library
 for building high performance streaming systems. The back-end
 framework is built using C++ which calls high speed CUDA libraries
 and bespoke kernels implemented by the Bifrost Developers. For
@@ -239,7 +240,7 @@ standard signal processing blocks as well as the bifrost map function,
 with a notable exception of high-speed convolution and gridding, for
 which a custom kernel was created based on a high speed gridder
 developed by John Romein in the Netherlands
-\cite{romein_efficient_2012}.
+\citep{romein_efficient_2012}.
 
 \subsection{Pipeline}
 
@@ -281,7 +282,7 @@ to ensure we are not sampling fourier modes outside of a physical horizon.
 This convolution and gridding operation is done using the Romein
 convolution algorithm, designed specifically for high speed
 visibility gridding where locality is poor and memory bandwidth
-is high \cite{romein_efficient_2012}.
+is high \citep{romein_efficient_2012}.
 
 Once the data has been gridded for a simple 40uS time step, the
 grid is inverse fourier transformed to produce an image of the
@@ -310,7 +311,7 @@ pre-generated and thus known previously.
 The Romein convolutional algorithm proved to be a critical
 step in the implementation of EPIC. Previous EPIC reference codes
 have attempted to use a direct convolution mapping using a matrix,
-as described by the operator formalism in \cite{thyagarajan_generic_2017}.
+as described by the operator formalism in \citep{thyagarajan_generic_2017}.
 
 Unfortunately on a GPU this results in unacceptably high
 memory bandwidth which serves to cause this step to bottleneck
@@ -324,7 +325,7 @@ Romein additionally allows multiple convolution kernels to be
 combined together and applied simultaenously. This not
 only allows convolution of the fourier point with the
 illumination pattern, but additionally scope for wide-field
-and antenna effects, such as is implemented in W-Projection \cite{cornwell_noncoplanar_2008}.
+and antenna effects, such as is implemented in W-Projection \citep{cornwell_noncoplanar_2008}.
 
 The implementation of non-coplanarity correction to ensure
 wide field fidelity will be covered in a future paper looking
@@ -445,7 +446,7 @@ itself. This is also an absolutely superb fit for the GPU
 programming model, as it is almost completely compute bound. This
 is best explored using a roofline model, a common visualisation in
 high performance computing to analyze the execution properties
-of a particular algorithm \cite{demmel_roofline:_2008}.
+of a particular algorithm \citep{demmel_roofline:_2008}.
 
 The roofline comparison between for the GPU computed elements of an
 FX correlator and EPIC is shown in Figure \ref{fig:epic_roofline}.
@@ -507,7 +508,7 @@ architecture.
 Future work will be focused around several elements:
 
 \begin{itemize}
-\item EPICal - EPIC requires calibration in real-time. A solution has been demonstrated but not implemented in a working correlator \cite{beardsley_efficient_2017}. This will be the a major feature addition.
+\item EPICal - EPIC requires calibration in real-time. A solution has been demonstrated but not implemented in a working correlator \citep{beardsley_efficient_2017}. This will be the a major feature addition.
 \item Wide Field Effects - It is necessary to deal with non-coplanarity and wide fields effects in EPIC. A forthcoming paper will elucidate the principles and practicalities behind doing this on direct imaging correlators.
 \item Optimisation - EPIC has unique computational challenges associated with it, which will benefit from broad and aggressive optimisation of key kernels and bottlenecks such as the convolutional gridding and FFT's.
 \end{itemize}
@@ -518,7 +519,7 @@ or Jansky's. Currently images are not calibrated, therefore, information
 is only available through the relative scale of the images.
 
 Future technical improvements include a correction of wide field
-effects, similar to what is done with visibilities using W-Projection \cite{cornwell_noncoplanar_2008}.
+effects, similar to what is done with visibilities using W-Projection \citep{cornwell_noncoplanar_2008}.
 Additionally EPIC needs to be optimised to run on a wide variety of generic
 GPU-enabled clusters to facilitate expanding its instrument base further.
 
