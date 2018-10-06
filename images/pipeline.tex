@@ -10,7 +10,7 @@
 \begin{document}
 \begin{tikzpicture}[x=1.2cm,y=1.2cm]
 
-  \tikzstyle{every node}=[font=\large, font=\bfseries]
+  \tikzstyle{every node}=[font=\huge, font=\bfseries]
   \draw [fill=blue, fill opacity = 0.2] (0,5.0) -- (3.0,5.0) -- (3.0,5.0 - 3) -- (0,5.0 - 3) -- cycle;
   \node at (1.5,3.5) [align=center] { UDP \\ Receive };
   
@@ -57,12 +57,12 @@
 
   %%% Add key
 
-  \draw (4.5, -0.1) node[circle,style={minimum width=.5ex,fill=white},draw]{};
-  \draw (5.8, -0.1) node {Ring Buffer};
-  \draw [fill = blue, fill opacity = 0.2] (4.25, -0.5) -- (4.75,-0.5) -- (4.75,-1.0) -- (4.25,-1.0) -- cycle;
-  \draw [fill = red, fill opacity = 0.2] (4.25, -1.1) -- (4.75,-1.1) -- (4.75,-1.6) -- (4.25,-1.6) -- cycle;
-  \draw (7.0, -0.7) node { Implemented Bifrost Blocks};
-  \draw (7.0, -1.3) node { Not Implemented Currently };
+  \draw (-4.25, -20) node[circle,style={minimum width=.5ex,fill=white},draw]{};
+  \draw (-2.5, -20) node [font=\fontsize{16}{1}\selectfont,align=left]{ Ring Buffer };
+  \draw [fill = blue, fill opacity = 0.2] (-4.5, -20.75) -- (-4.0,-20.75) -- (-4.0,-21.25) -- (-4.5,-21.25) -- cycle;
+  \draw [fill = red, fill opacity = 0.2] (-4.5, -21.75) -- (-4.0,-21.75) -- (-4.0,-22.25) -- (-4.5,-22.25) -- cycle;
+  \draw (-0.75, -21) node [font=\fontsize{16}{1}\selectfont,align=left]{ Implemented Bifrost Blocks };
+  \draw (-0.75, -22) node [font=\fontsize{16}{1}\selectfont,align=left]{ Not Implemented Currently };
 
   
 \end{tikzpicture}
